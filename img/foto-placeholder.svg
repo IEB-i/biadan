@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#f5f3ef"/>
+      <stop offset="100%" stop-color="#e8edf2"/>
+    </linearGradient>
+  </defs>
+  <rect width="400" height="300" fill="url(#bg)"/>
+  <circle cx="164" cy="116" r="30" fill="#c6d2de"/>
+  <path d="M110 232 C110 180 144 158 164 158 C184 158 218 180 218 232 Z" fill="#c6d2de"/>
+  <circle cx="236" cy="122" r="28" fill="#b7c6d5"/>
+  <path d="M186 232 C186 184 218 163 236 163 C254 163 286 184 286 232 Z" fill="#b7c6d5"/>
+  <text x="200" y="268" text-anchor="middle" font-family="Arial, sans-serif" font-size="15" fill="#7c8b9b">Foto do casal</text>
+</svg>
+

@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lista de Presentes</title>
+  <meta name="description" content="Site do casamento — lista de presentes com Pix e confirmação de presença." />
+  <link rel="icon" type="image/svg+xml" href="img/favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Lato:wght@300;400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <!-- Barra fixa que aparece ao rolar -->
+  <header class="topbar" id="topbar">
+    <a href="#inicio" class="topbar-logo" id="topLogo">A &amp; D</a>
+    <button class="menu-toggle" id="menuToggle" aria-label="Abrir menu">☰</button>
+  </header>
+
+  <!-- ===== APRESENTAÇÃO ===== -->
+  <section class="home" id="inicio">
+    <img src="img/floral-canto.svg" class="deco deco-tr" alt="" aria-hidden="true" />
+    <img src="img/floral-canto.svg" class="deco deco-bl" alt="" aria-hidden="true" />
+
+    <div class="moldura">
+      <img id="fotoCasal" class="moldura-foto" src="img/hero.jpg" alt="Foto do casal" />
+    </div>
+
+    <h1 class="names"><span id="nomeNoiva">Noiva</span> <span class="nowrap">&amp; <span id="nomeNoivo">Noivo</span></span></h1>
+    <p class="date" id="dataTexto"></p>
+    <img src="img/floral-divisor.svg" class="divisor" alt="" aria-hidden="true" />
+
+    <div class="countdown">
+      <div><strong id="cdDias">0</strong><span>dias</span></div>
+      <div><strong id="cdHoras">0</strong><span>horas</span></div>
+      <div><strong id="cdMin">0</strong><span>min</span></div>
+      <div><strong id="cdSeg">0</strong><span>seg</span></div>
+    </div>
+
+    <nav class="menu" id="menu">
+      <a href="#inicio">Home</a>
+      <a href="#casal">O casal</a>
+      <a href="#padrinhos" id="menuPadrinhos">Padrinhos</a>
+      <a href="#cerimonia">Cerimônia</a>
+      <a href="#presentes">Lista de presentes</a>
+      <a href="#presenca">Confirme sua presença</a>
+    </nav>
+
+    <div class="texto" id="textoBoasVindas"></div>
+  </section>
+
+  <!-- ===== FOTO GRANDE ===== -->
+  <div class="banner" id="banner" role="img" aria-label="Foto do casal"></div>
+
+  <!-- ===== O CASAL ===== -->
+  <section class="secao" id="casal">
+    <img src="img/floral-ramo.svg" class="deco deco-ramo-r" alt="" aria-hidden="true" />
+    <h2>O Casal</h2>
+    <img src="img/floral-divisor.svg" class="divisor" alt="" aria-hidden="true" />
+    <div class="texto" id="textoCasal"></div>
+    <div class="galeria" id="galeria"></div>
+  </section>
+
+  <!-- ===== PADRINHOS ===== -->
+  <section class="secao" id="padrinhos">
+    <img src="img/floral-ramo.svg" class="deco deco-ramo-l" alt="" aria-hidden="true" />
+    <h2>Padrinhos</h2>
+    <img src="img/floral-divisor.svg" class="divisor" alt="" aria-hidden="true" />
+    <div class="texto" id="textoPadrinhos"></div>
+    <div class="padrinhos" id="listaPadrinhos"></div>
+  </section>
+
+  <!-- ===== CERIMÔNIA ===== -->
+  <section class="secao" id="cerimonia">
+    <img src="img/floral-ramo.svg" class="deco deco-ramo-l" alt="" aria-hidden="true" />
+    <h2 class="h2-longo" id="tituloCerimonia">Cerimônia</h2>
+    <img src="img/floral-divisor.svg" class="divisor" alt="" aria-hidden="true" />
+    <div class="texto" id="textoCerimonia"></div>
+    <div class="mapa">
+      <iframe id="mapa" title="Mapa do local da cerimônia" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    </div>
+    <a class="btn" id="btnComoChegar" target="_blank" rel="noopener">Como chegar</a>
+  </section>
+
+  <!-- ===== LISTA DE PRESENTES ===== -->
+  <section class="secao" id="presentes">
+    <img src="img/floral-ramo.svg" class="deco deco-ramo-r" alt="" aria-hidden="true" />
+    <h2>Lista de Presentes</h2>
+    <img src="img/floral-divisor.svg" class="divisor" alt="" aria-hidden="true" />
+    <div class="texto"><p>Escolha um ou mais presentes, coloque no carrinho e pague tudo de uma vez com <b>Pix</b>. O valor vai direto para os noivos.</p></div>
+
+    <div class="lista-topo">
+      <button class="btn btn-carrinho" id="btnCarrinho">
+        <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M3 4h2l2.4 10.2a1 1 0 0 0 1 .8h8.9a1 1 0 0 0 1-.8L20 8H6.2M9 19.5a1 1 0 1 0 0 .01M17 19.5a1 1 0 1 0 0 .01"/></svg>
+        <span id="carrinhoTexto">Carrinho vazio</span>
+      </button>
+      <div class="ordenar">
+        <label for="ordem">Ordenar lista por:</label>
+        <select id="ordem">
+          <option value="padrao">Sugestão dos noivos</option>
+          <option value="az">A-Z</option>
+          <option value="menor">Menor preço</option>
+          <option value="maior">Maior preço</option>
+        </select>
+      </div>
+    </div>
+    <div class="filtros" id="filtros">
+      <button class="filtro ativo" data-cat="todos">Todos</button>
+      <button class="filtro" data-cat="casa">Casa</button>
+      <button class="filtro" data-cat="cozinha">Cozinha</button>
+      <button class="filtro" data-cat="lua-de-mel">Lua de mel</button>
+    </div>
+
+    <div class="grade" id="grade"></div>
+
+    <div class="livre">
+      <div>
+        <h3>Prefere escolher o valor?</h3>
+        <p>Faça uma contribuição livre de qualquer valor.</p>
+      </div>
+      <button class="btn" id="btnLivre">Contribuição livre</button>
+    </div>
+  </section>
+
+  <!-- ===== CONFIRME SUA PRESENÇA ===== -->
+  <section class="secao" id="presenca">
+    <img src="img/floral-ramo.svg" class="deco deco-ramo-l" alt="" aria-hidden="true" />
+    <h2>Confirme sua presença</h2>
+    <img src="img/floral-divisor.svg" class="divisor" alt="" aria-hidden="true" />
+    <div class="texto"><p>Preencha os dados abaixo. Ao enviar, abriremos o WhatsApp com a sua confirmação pronta para mandar aos noivos.</p></div>
+
+    <form class="rsvp" id="rsvp">
+      <label for="rNome">Nome completo</label>
+      <input id="rNome" required maxlength="80" />
+
+      <span class="rotulo">Você irá ao evento?</span>
+      <div class="radios">
+        <label><input type="radio" name="vai" value="sim" checked /> Sim, estarei lá!</label>
+        <label><input type="radio" name="vai" value="nao" /> Infelizmente não poderei ir</label>
+      </div>
+
+      <div class="duas-colunas" id="rQtd">
+        <div>
+          <label for="rAdultos">Adultos (incluindo você)</label>
+          <select id="rAdultos"></select>
+        </div>
+        <div>
+          <label for="rCriancas">Crianças</label>
+          <select id="rCriancas"></select>
+        </div>
+      </div>
+
+      <label for="rObs">Observações (opcional)</label>
+      <textarea id="rObs" rows="3" maxlength="400"></textarea>
+
+      <button class="btn btn-full" type="submit">Enviar confirmação</button>
+    </form>
+  </section>
+
+  <!-- ===== RODAPÉ ===== -->
+  <footer class="rodape">
+    <img src="img/floral-divisor.svg" class="divisor" alt="" aria-hidden="true" />
+    <p class="rodape-nomes" id="rodapeNomes"></p>
+    <p id="rodapeData"></p>
+  </footer>
+
+  <!-- ===== MODAL: CARRINHO / PAGAMENTO ===== -->
+  <div class="modal" id="modal" aria-hidden="true">
+    <div class="modal-box" role="dialog" aria-modal="true">
+      <button class="modal-fechar" id="modalFechar" aria-label="Fechar">&times;</button>
+
+      <!-- 1. Carrinho -->
+      <div class="etapa" id="etapaCarrinho">
+        <h3>Meu carrinho</h3>
+        <div id="itensCarrinho"></div>
+        <p class="total">Valor total: <strong id="totalCarrinho">R$ 0,00</strong></p>
+        <button class="btn btn-full" id="btnFinalizar">Finalizar com Pix</button>
+        <button class="btn btn-contorno btn-full" id="btnMais">Escolher mais presentes</button>
+      </div>
+
+      <!-- 2. Identificação -->
+      <div class="etapa oculto" id="etapaDados">
+        <h3>Deixe sua mensagem de carinho</h3>
+        <p class="sub">Total: <strong id="totalDados"></strong></p>
+        <label for="nomeConvidado">Seu nome</label>
+        <input id="nomeConvidado" maxlength="60" placeholder="Este nome será enviado aos noivos" />
+        <label for="recado">Mensagem (opcional)</label>
+        <textarea id="recado" rows="4" maxlength="400" placeholder="Escreva um recado carinhoso para o casal..."></textarea>
+        <button class="btn btn-full" id="btnGerarPix">Gerar Pix</button>
+        <button class="link" id="voltarCarrinho">&larr; voltar para o carrinho</button>
+      </div>
+
+      <!-- 3. Pix -->
+      <div class="etapa oculto" id="etapaPix">
+        <h3>Pague com Pix</h3>
+        <p class="sub">Abra o app do seu banco e escolha <b>Pix &rarr; Ler QR Code</b> ou <b>Pix Copia e Cola</b>.</p>
+        <div class="qr" id="qr"></div>
+        <p class="total">Valor: <strong id="totalPix"></strong></p>
+        <p class="recebedor" id="recebedor"></p>
+        <textarea id="pixCodigo" readonly rows="3"></textarea>
+        <button class="btn btn-full" id="btnCopiar">Copiar código Pix</button>
+        <button class="btn btn-contorno btn-full" id="btnWhats">Já paguei — avisar os noivos 💌</button>
+        <button class="link" id="voltarDados">&larr; voltar</button>
+      </div>
+
+      <!-- 4. Obrigado -->
+      <div class="etapa oculto" id="etapaObrigado">
+        <img src="img/floral-divisor.svg" class="divisor" alt="" aria-hidden="true" />
+        <h3>Muito obrigado!</h3>
+        <p class="sub">Seu carinho significa muito para nós. Mal podemos esperar para celebrar com você!</p>
+        <button class="btn btn-full" id="btnConcluir">Voltar para o site</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script src="js/qrcode.min.js"></script>
+  <script src="js/config.js"></script>
+  <script src="js/pix.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
