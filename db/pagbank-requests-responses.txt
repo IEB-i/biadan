@@ -1,0 +1,182 @@
+======================================================================
+INTEGRAÇÃO PAGBANK — CHECKOUT PAGBANK (API /checkouts)
+Site: https://mociap.github.io/biadan/
+Objetivo: Lista de presentes de casamento (Anna Beatriz & Daniel)
+======================================================================
+
+----------------------------------------------------------------------
+1. CRIAR CHECKOUT (POST /checkouts)
+----------------------------------------------------------------------
+
+REQUEST:
+POST https://api.pagseguro.com/checkouts
+Headers:
+  Authorization: Bearer <TOKEN_PAGBANK>
+  Accept: application/json
+  Content-Type: application/json
+
+Body (JSON):
+{
+  "reference_id": "BIADAN-1795010000000-123",
+  "customer_modifiable": true,
+  "items": [
+    {
+      "reference_id": "panelas",
+      "name": "Jogo de Panelas Antiaderentes (5 peças)",
+      "quantity": 1,
+      "unit_amount": 28000
+    }
+  ],
+  "redirect_url": "https://mociap.github.io/biadan/?presente=retorno&ref=BIADAN-1795010000000-123",
+  "payment_notification_urls": [
+    "https://script.google.com/macros/s/AKfycbySG7Ea1dt1u4F9SO7txLmm9VADqdRPO8GuOWvfkzPrvTymkx3KGRL4lSxegIYAFpQ52A/exec"
+  ]
+}
+
+RESPONSE ESPERADO (201 Created):
+{
+  "id": "CHEC_120301FA-8B8B-4C25-B07D-A4541EB78EB5",
+  "reference_id": "BIADAN-1795010000000-123",
+  "created_at": "2026-11-18T12:00:00-03:00",
+  "expiration_date": "2026-11-18T14:00:00-03:00",
+  "customer_modifiable": true,
+  "items": [
+    {
+      "reference_id": "panelas",
+      "name": "Jogo de Panelas Antiaderentes (5 peças)",
+      "quantity": 1,
+      "unit_amount": 28000
+    }
+  ],
+  "redirect_url": "https://mociap.github.io/biadan/?presente=retorno&ref=BIADAN-1795010000000-123",
+  "payment_notification_urls": [
+    "https://script.google.com/macros/s/AKfycbySG7Ea1dt1u4F9SO7txLmm9VADqdRPO8GuOWvfkzPrvTymkx3KGRL4lSxegIYAFpQ52A/exec"
+  ],
+  "status": "ACTIVE",
+  "links": [
+    {
+      "rel": "SELF",
+      "href": "https://api.pagseguro.com/checkouts/CHEC_120301FA-8B8B-4C25-B07D-A4541EB78EB5",
+      "media": "application/json",
+      "type": "GET"
+    },
+    {
+      "rel": "PAY",
+      "href": "https://pagamento.pagbank.com.br/pagamento?code=CHEC_120301FA-8B8B-4C25-B07D-A4541EB78EB5",
+      "media": "text/html",
+      "type": "GET"
+    }
+  ]
+}
+
+RESPONSE ATUAL EM PRODUÇÃO (antes da liberação de allowlist):
+HTTP/1.1 403 Forbidden
+{
+  "error_messages": [
+    {
+      "error": "allowlist_access_required",
+      "description": "Allowlist access required. Contact PagBank."
+    }
+  ]
+}
+
+
+----------------------------------------------------------------------
+2. CONSULTAR CHECKOUT NO RETORNO / VERIFICAÇÃO (GET /checkouts/{id})
+----------------------------------------------------------------------
+
+REQUEST:
+GET https://api.pagseguro.com/checkouts/CHEC_120301FA-8B8B-4C25-B07D-A4541EB78EB5
+Headers:
+  Authorization: Bearer <TOKEN_PAGBANK>
+  Accept: application/json
+
+RESPONSE ESPERADO (200 OK — após pagamento aprovado):
+{
+  "id": "CHEC_120301FA-8B8B-4C25-B07D-A4541EB78EB5",
+  "reference_id": "BIADAN-1795010000000-123",
+  "status": "ACTIVE",
+  "created_at": "2026-11-18T12:00:00-03:00",
+  "expiration_date": "2026-11-18T14:00:00-03:00",
+  "customer_modifiable": true,
+  "items": [
+    {
+      "reference_id": "panelas",
+      "name": "Jogo de Panelas Antiaderentes (5 peças)",
+      "quantity": 1,
+      "unit_amount": 28000
+    }
+  ],
+  "orders": [
+    {
+      "id": "ORDE_F87334AC-BB8B-42E2-AA85-8579F70AA328",
+      "reference_id": "BIADAN-1795010000000-123",
+      "created_at": "2026-11-18T12:02:00-03:00",
+      "charges": [
+        {
+          "id": "CHAR_67FC568B-00D8-431D-91AF-1234567890AB",
+          "reference_id": "BIADAN-1795010000000-123",
+          "status": "PAID",
+          "created_at": "2026-11-18T12:02:00-03:00",
+          "paid_at": "2026-11-18T12:02:15-03:00",
+          "amount": {
+            "value": 28000,
+            "currency": "BRL"
+          },
+          "payment_method": {
+            "type": "PIX"
+          }
+        }
+      ]
+    }
+  ]
+}
+
+
+----------------------------------------------------------------------
+3. CONSULTAR PEDIDO RECEBIDO VIA WEBHOOK (GET /orders/{id})
+----------------------------------------------------------------------
+
+REQUEST:
+GET https://api.pagseguro.com/orders/ORDE_F87334AC-BB8B-42E2-AA85-8579F70AA328
+Headers:
+  Authorization: Bearer <TOKEN_PAGBANK>
+  Accept: application/json
+
+RESPONSE ESPERADO (200 OK):
+{
+  "id": "ORDE_F87334AC-BB8B-42E2-AA85-8579F70AA328",
+  "reference_id": "BIADAN-1795010000000-123",
+  "created_at": "2026-11-18T12:02:00-03:00",
+  "items": [
+    {
+      "reference_id": "panelas",
+      "name": "Jogo de Panelas Antiaderentes (5 peças)",
+      "quantity": 1,
+      "unit_amount": 28000
+    }
+  ],
+  "charges": [
+    {
+      "id": "CHAR_67FC568B-00D8-431D-91AF-1234567890AB",
+      "reference_id": "BIADAN-1795010000000-123",
+      "status": "PAID",
+      "amount": {
+        "value": 28000,
+        "currency": "BRL",
+        "summary": {
+          "total": 28000,
+          "paid": 28000,
+          "refunded": 0
+        }
+      },
+      "payment_response": {
+        "code": "20000",
+        "message": "SUCESSO"
+      },
+      "payment_method": {
+        "type": "PIX"
+      }
+    }
+  ]
+}

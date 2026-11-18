@@ -1,0 +1,152 @@
+{
+  "integracao": "Checkout PagBank - Lista de Presentes (Anna Beatriz & Daniel)",
+  "site": "https://mociap.github.io/biadan/",
+  "endpoints": [
+    {
+      "nome": "1. Criar Checkout",
+      "request": {
+        "method": "POST",
+        "url": "https://api.pagseguro.com/checkouts",
+        "headers": {
+          "Authorization": "Bearer <TOKEN_PAGBANK>",
+          "Accept": "application/json",
+          "Content-Type": "application/json"
+        },
+        "body": {
+          "reference_id": "BIADAN-1795010000000-123",
+          "customer_modifiable": true,
+          "items": [
+            {
+              "reference_id": "panelas",
+              "name": "Jogo de Panelas Antiaderentes (5 peças)",
+              "quantity": 1,
+              "unit_amount": 28000
+            }
+          ],
+          "redirect_url": "https://mociap.github.io/biadan/?presente=retorno&ref=BIADAN-1795010000000-123",
+          "payment_notification_urls": [
+            "https://script.google.com/macros/s/AKfycbySG7Ea1dt1u4F9SO7txLmm9VADqdRPO8GuOWvfkzPrvTymkx3KGRL4lSxegIYAFpQ52A/exec"
+          ]
+        }
+      },
+      "response_esperado": {
+        "status": 201,
+        "body": {
+          "id": "CHEC_120301FA-8B8B-4C25-B07D-A4541EB78EB5",
+          "reference_id": "BIADAN-1795010000000-123",
+          "status": "ACTIVE",
+          "customer_modifiable": true,
+          "items": [
+            {
+              "reference_id": "panelas",
+              "name": "Jogo de Panelas Antiaderentes (5 peças)",
+              "quantity": 1,
+              "unit_amount": 28000
+            }
+          ],
+          "redirect_url": "https://mociap.github.io/biadan/?presente=retorno&ref=BIADAN-1795010000000-123",
+          "links": [
+            {
+              "rel": "SELF",
+              "href": "https://api.pagseguro.com/checkouts/CHEC_120301FA-8B8B-4C25-B07D-A4541EB78EB5",
+              "media": "application/json",
+              "type": "GET"
+            },
+            {
+              "rel": "PAY",
+              "href": "https://pagamento.pagbank.com.br/pagamento?code=CHEC_120301FA-8B8B-4C25-B07D-A4541EB78EB5",
+              "media": "text/html",
+              "type": "GET"
+            }
+          ]
+        }
+      },
+      "response_atual_producao": {
+        "status": 403,
+        "body": {
+          "error_messages": [
+            {
+              "error": "allowlist_access_required",
+              "description": "Allowlist access required. Contact PagBank."
+            }
+          ]
+        }
+      }
+    },
+    {
+      "nome": "2. Consultar Checkout no retorno/verificacao",
+      "request": {
+        "method": "GET",
+        "url": "https://api.pagseguro.com/checkouts/CHEC_120301FA-8B8B-4C25-B07D-A4541EB78EB5",
+        "headers": {
+          "Authorization": "Bearer <TOKEN_PAGBANK>",
+          "Accept": "application/json"
+        }
+      },
+      "response_esperado": {
+        "status": 200,
+        "body": {
+          "id": "CHEC_120301FA-8B8B-4C25-B07D-A4541EB78EB5",
+          "reference_id": "BIADAN-1795010000000-123",
+          "status": "ACTIVE",
+          "orders": [
+            {
+              "id": "ORDE_F87334AC-BB8B-42E2-AA85-8579F70AA328",
+              "reference_id": "BIADAN-1795010000000-123",
+              "charges": [
+                {
+                  "id": "CHAR_67FC568B-00D8-431D-91AF-1234567890AB",
+                  "reference_id": "BIADAN-1795010000000-123",
+                  "status": "PAID",
+                  "amount": {
+                    "value": 28000,
+                    "currency": "BRL"
+                  },
+                  "payment_method": {
+                    "type": "PIX"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "nome": "3. Consultar Pedido apos webhook",
+      "request": {
+        "method": "GET",
+        "url": "https://api.pagseguro.com/orders/ORDE_F87334AC-BB8B-42E2-AA85-8579F70AA328",
+        "headers": {
+          "Authorization": "Bearer <TOKEN_PAGBANK>",
+          "Accept": "application/json"
+        }
+      },
+      "response_esperado": {
+        "status": 200,
+        "body": {
+          "id": "ORDE_F87334AC-BB8B-42E2-AA85-8579F70AA328",
+          "reference_id": "BIADAN-1795010000000-123",
+          "charges": [
+            {
+              "id": "CHAR_67FC568B-00D8-431D-91AF-1234567890AB",
+              "reference_id": "BIADAN-1795010000000-123",
+              "status": "PAID",
+              "amount": {
+                "value": 28000,
+                "currency": "BRL"
+              },
+              "payment_response": {
+                "code": "20000",
+                "message": "SUCESSO"
+              },
+              "payment_method": {
+                "type": "PIX"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ]
+}
